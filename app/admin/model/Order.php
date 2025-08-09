@@ -30,6 +30,8 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order query()
+ * @property-read \app\admin\model\User|null $toUser
+ * @property-read \app\admin\model\User|null $user
  * @mixin \Eloquent
  */
 class Order extends Base
@@ -62,6 +64,16 @@ class Order extends Base
             1 => '待确认',
             2 => '已确认',
         ][$this->status]?:'';
+    }
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    function toUser()
+    {
+        return $this->belongsTo(User::class, 'to_user_id', 'id');
     }
 
 

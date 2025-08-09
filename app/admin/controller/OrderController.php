@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\User;
 use support\Request;
 use support\Response;
 use app\admin\model\Order;
@@ -98,8 +99,8 @@ class OrderController extends Crud
             $status = $request->post('status');
             $row = Order::findOrFail($id);
             if ($row->status == 1 && $status == 2){
-                //后台确认
-
+                //后台确认  给这个用户上级反直推收益
+                User::changeMoney($row->push_amount,$row->user->parent_id,'直推收益');
             }
             return parent::update($request);
         }

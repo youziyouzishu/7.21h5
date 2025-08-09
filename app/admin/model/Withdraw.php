@@ -25,6 +25,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw query()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw withoutTrashed()
+ * @property-read mixed $status_text
  * @mixin \Eloquent
  */
 class Withdraw extends Base
