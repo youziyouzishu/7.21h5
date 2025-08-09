@@ -1,0 +1,109 @@
+<?php
+
+namespace app\admin\controller;
+
+use support\Request;
+use support\Response;
+use app\admin\model\Order;
+use plugin\admin\app\controller\Crud;
+use support\exception\BusinessException;
+
+/**
+ * 数据优化管理 
+ */
+class OrderController extends Crud
+{
+    
+    /**
+     * @var Order
+     */
+    protected $model = null;
+
+    /**
+     * 构造函数
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->model = new Order;
+    }
+    
+    /**
+     * 浏览
+     * @return Response
+     */
+    public function index(): Response
+    {
+        return view('order/index');
+    }
+
+    /**
+     * 插入
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+     */
+    public function insert(Request $request): Response
+    {
+        if ($request->method() === 'POST') {
+            $service_rate = $request->post('service_rate');
+            $kehu_rate = $request->post('kehu_rate');
+            $push_rate = $request->post('push_rate');
+            $trade_amount = $request->post('trade_amount');
+            $request->setParams('post',[
+                'ordersn' => generateOrderSn(),
+                'service_amount' => bcmul($trade_amount, $service_rate,2),
+                'kehu_amount' => bcmul($trade_amount, $kehu_rate,2),
+                'push_amount' => bcmul($trade_amount, $push_rate,2),
+            ]);
+            return parent::insert($request);
+        }
+        return view('order/insert');
+    }
+
+    /**
+     * 复制
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+     */
+    public function copy(Request $request): Response
+    {
+        if ($request->method() === 'POST') {
+            $service_rate = $request->post('service_rate');
+            $kehu_rate = $request->post('kehu_rate');
+            $push_rate = $request->post('push_rate');
+            $trade_amount = $request->post('trade_amount');
+            $request->setParams('post',[
+                'ordersn' => generateOrderSn(),
+                'service_amount' => bcmul($trade_amount, $service_rate,2),
+                'kehu_amount' => bcmul($trade_amount, $kehu_rate,2),
+                'push_amount' => bcmul($trade_amount, $push_rate,2),
+            ]);
+            return parent::insert($request);
+        }
+        return view('order/copy');
+    }
+
+    /**
+     * 更新
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+    */
+    public function update(Request $request): Response
+    {
+        if ($request->method() === 'POST') {
+            $id = $request->post('id');
+            $status = $request->post('status');
+            $row = Order::findOrFail($id);
+            if ($row->status == 1 && $status == 2){
+                //后台确认
+
+            }
+            return parent::update($request);
+        }
+        return view('order/update');
+    }
+
+}
