@@ -14,7 +14,13 @@
 
 use Webman\Route;
 
-
+Route::fallback(function () {
+    if (request()->header('accept') == 'application/json'){
+        throw new \Tinywan\ExceptionHandler\Exception\RouteNotFoundException();
+    }else{
+        return new \support\Response(404, [], file_get_contents(base_path('plugin' . DIRECTORY_SEPARATOR. 'admin' . DIRECTORY_SEPARATOR . 'public') . '/demos/error/404.html'));
+    }
+});
 
 
 
