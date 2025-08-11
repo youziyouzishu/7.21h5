@@ -79,7 +79,7 @@ class Shop extends Base
         ][$this->status]??'';
     }
 
-    
-    
-    
+
+
+
 }

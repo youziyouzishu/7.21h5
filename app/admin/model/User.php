@@ -46,6 +46,7 @@ use support\Db;
  * @property-read mixed $user_identity_status
  * @property string $total_service_amount 总服务费
  * @property string $total_amount 总金额(交易金额+客户收益)
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
  * @mixin \Eloquent
  */
 class User extends Base

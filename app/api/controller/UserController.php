@@ -63,29 +63,43 @@ class UserController extends Base
     function getUserIdentity(Request $request)
     {
         $row = User::find($request->user_id);
-        return $this->success('成功', $row->userIdentity());
+        return $this->success('成功', $row->userIdentity);
     }
 
     function getUserShop(Request $request)
     {
         $row = User::find($request->user_id);
-        return $this->success('成功', $row->shop());
+        return $this->success('成功', $row->shop);
     }
 
     function editUserIdentity(Request $request)
     {
+        $user = User::find($request->user_id);
+        if (!$user->userIdentity || $user->userIdentity->status != 2){
+            return $this->fail('请先完成个人认证');
+        }
+
         $param = $request->post();
+        $param['status'] = 0;
         $row = UserIdentity::findOrFail($param['id']);
         $row->fill($param);
         $row->save();
+        return $this->success('成功');
     }
 
     function editUserShop(Request $request)
     {
+        $user = User::find($request->user_id);
+        if (!$user->shop || $user->shop->status != 2){
+            return $this->fail('请先完成商铺认证');
+        }
+
         $param = $request->post();
+        $param['status'] = 0;
         $row = Shop::findOrFail($param['id']);
         $row->fill($param);
         $row->save();
+        return $this->success('成功');
     }
 
     /**
@@ -96,6 +110,13 @@ class UserController extends Base
     function insertUserIdentity(Request $request)
     {
         $param = $request->post();
+
+        $user = User::find($request->user_id);
+        if ($user->userIdentity) {
+            return $this->fail('您已申请个人认证');
+        }
+
+
         $param['user_id'] = $request->user_id;
         $row = UserIdentity::create($param);
         return $this->success('成功', $row);
@@ -109,6 +130,12 @@ class UserController extends Base
     function insertShop(Request $request)
     {
         $param = $request->post();
+
+        $user = User::find($request->user_id);
+        if ($user->shop) {
+            return $this->fail('您已申请店铺认证');
+        }
+
         $param['user_id'] = $request->user_id;
         $row = Shop::create($param);
         return $this->success('成功', $row);
@@ -129,6 +156,7 @@ class UserController extends Base
         $amount = $request->input('amount');
         $date = $request->input('date');
         $row = Subscribe::create([
+            'user_id' => $request->user_id,
             'name' => $name,
             'amount' => $amount,
             'date' => $date,

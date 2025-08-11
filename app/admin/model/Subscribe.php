@@ -17,6 +17,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe query()
+ * @property-read mixed $status_text
  * @mixin \Eloquent
  */
 class Subscribe extends Base
@@ -44,6 +45,18 @@ class Subscribe extends Base
         'created_at',
         'updated_at',
     ];
+
+    protected $appends = [
+        'status_text',
+    ];
+
+    public function getStatusTextAttribute()
+    {
+        return [
+            0 => '待审核',
+            1 => '已审核',
+        ][$this->status]??'';
+    }
     
     
     
