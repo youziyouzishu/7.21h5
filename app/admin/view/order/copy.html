@@ -51,9 +51,10 @@
         <script src="/app/admin/admin/js/permission.js"></script>
         
         <script>
-            
+
+            let id = layui.url().search['id'];
             // 相关接口
-            const INSERT_API = "/admin/order/insert";
+            const INSERT_API = "/admin/order/copy?id=" +  id;
             
             // 字段 买家 user_id
             layui.use(["jquery", "xmSelect", "popup"], function() {

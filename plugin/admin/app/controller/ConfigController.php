@@ -100,6 +100,7 @@ class ConfigController extends Base
                     break;
                 case 'platform':
                     $data[$section]['zfb_sj_qr'] = Util::filterUrlPath($items['zfb_sj_qr'] ?? '');;
+                    $data[$section]['zfb_yc_qr'] = Util::filterUrlPath($items['zfb_yc_qr'] ?? '');;
                     $data[$section]['wx_sj_qr'] = Util::filterUrlPath($items['wx_sj_qr'] ?? '');
                     $data[$section]['bank_account'] = htmlspecialchars($items['bank_account'] ?? '');
                     $data[$section]['bank_name'] = htmlspecialchars($items['bank_name'] ?? '');

@@ -220,7 +220,7 @@ class UserController extends Base
     function getOrderDetail(Request $request)
     {
         $id = $request->input('id');
-        $row = Order::findOrFail($id);
+        $row = Order::with(['user','toUser'])->findOrFail($id);
         return $this->success('成功', $row);
     }
 

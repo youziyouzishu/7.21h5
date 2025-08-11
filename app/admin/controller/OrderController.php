@@ -71,16 +71,23 @@ class OrderController extends Crud
     public function copy(Request $request): Response
     {
         if ($request->method() === 'POST') {
-            $service_rate = $request->post('service_rate');
-            $kehu_rate = $request->post('kehu_rate');
-            $push_rate = $request->post('push_rate');
-            $trade_amount = $request->post('trade_amount');
+            $id = $request->input('id');
+            $row = Order::findOrFail($id);
+
+            $trade_amount = $row->trade_amount + $row->service_amount + $row->kehu_amount + $row->push_amount;
             $request->setParams('post',[
                 'ordersn' => generateOrderSn(),
-                'service_amount' => bcmul($trade_amount, $service_rate,2),
-                'kehu_amount' => bcmul($trade_amount, $kehu_rate,2),
-                'push_amount' => bcmul($trade_amount, $push_rate,2),
+                'service_amount' => bcmul($trade_amount, $row->service_rate,2),
+                'kehu_amount' => bcmul($trade_amount, $row->kehu_rate,2),
+                'push_amount' => bcmul($trade_amount, $row->push_rate,2),
+                'kehu_rate' =>  $row->kehu_rate,
+                'push_rate' => $row->push_rate,
+                'service_rate' => $row->service_rate,
+                'goods_name' => $row->goods_name,
+                'trade_amount' => $trade_amount
             ]);
+            $row->is_copy = 1;
+            $row->save();
             return parent::insert($request);
         }
         return view('order/copy');

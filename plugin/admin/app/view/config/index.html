@@ -187,7 +187,7 @@
                         <form class="layui-form" lay-filter="platformInfo">
 
                             <div class="layui-form-item">
-                                <label class="layui-form-label">支付宝收款码</label>
+                                <label class="layui-form-label">支付宝商家收款码</label>
                                 <div class="layui-input-block">
                                     <img class="img-4" src=""/>
                                     <input type="text" style="display:none" name="zfb_sj_qr" value="" />
@@ -195,6 +195,20 @@
                                         <i class="layui-icon layui-icon-upload"></i>上传图片
                                     </button>
                                     <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-zfb_sj_qr" permission="app.admin.upload.attachment">
+                                        <i class="layui-icon layui-icon-align-left"></i>选择图片
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">支付宝远程收款码</label>
+                                <div class="layui-input-block">
+                                    <img class="img-4" src=""/>
+                                    <input type="text" style="display:none" name="zfb_yc_qr" value="" />
+                                    <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="zfb_yc_qr" permission="app.admin.upload.image">
+                                        <i class="layui-icon layui-icon-upload"></i>上传图片
+                                    </button>
+                                    <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-zfb_yc_qr" permission="app.admin.upload.attachment">
                                         <i class="layui-icon layui-icon-align-left"></i>选择图片
                                     </button>
                                 </div>
@@ -385,6 +399,33 @@
                 });
                 layui.upload.render({
                     elem: "#zfb_sj_qr",
+                    url: "/app/admin/upload/image",
+                    acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                    done: function (res) {
+                        if (res.code) {
+                            return layui.popup.failure(res.msg);
+                        }
+                        this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                    }
+                });
+
+                let zfb_yc_qr = $("#zfb_yc_qr").prev();
+                zfb_yc_qr.prev().attr("src", zfb_yc_qr.val());
+                layui.$("#attachment-choose-zfb_yc_qr").on("click", function() {
+                    parent.layer.open({
+                        type: 2,
+                        title: "选择附件",
+                        content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                        area: ["95%", "90%"],
+                        success: function (layero, index) {
+                            parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                zfb_yc_qr.val(data.url).prev().attr("src", data.url);
+                            });
+                        }
+                    });
+                });
+                layui.upload.render({
+                    elem: "#zfb_yc_qr",
                     url: "/app/admin/upload/image",
                     acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
                     done: function (res) {
