@@ -96,6 +96,7 @@ class UserController extends Base
     function insertUserIdentity(Request $request)
     {
         $param = $request->post();
+        $param['user_id'] = $request->user_id;
         $row = UserIdentity::create($param);
         return $this->success('成功', $row);
     }
@@ -108,6 +109,7 @@ class UserController extends Base
     function insertShop(Request $request)
     {
         $param = $request->post();
+        $param['user_id'] = $request->user_id;
         $row = Shop::create($param);
         return $this->success('成功', $row);
     }

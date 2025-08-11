@@ -76,7 +76,7 @@ class Shop extends Base
             0 => '待审核',
             1 => '通过',
             2 => '拒绝',
-        ][$this->status];
+        ][$this->status]??'';
     }
 
     
