@@ -137,15 +137,15 @@ class User extends Base
 
     public function getUserIdentityStatusAttribute()
     {
-        $userIdentity =  $this->userIdentity();
+        $userIdentity =  $this->userIdentity;
         if ($userIdentity) {
-            if ($userIdentity == 0){
+            if ($userIdentity->status == 0){
                 return 1;//待审核
             }
-            if ($userIdentity == 1){
+            if ($userIdentity->status == 1){
                 return 2;//已通过
             }
-            if ($userIdentity == 2){
+            if ($userIdentity->status == 2){
                 return 3;//驳回
             }
         }
@@ -154,15 +154,15 @@ class User extends Base
 
     public function getShopStatusAttribute()
     {
-        $shop =  $this->shop();
+        $shop =  $this->shop;
         if ($shop) {
-            if ($shop == 0){
+            if ($shop->status == 0){
                 return 1;//待审核
             }
-            if ($shop == 1){
+            if ($shop->status == 1){
                 return 2;//已通过
             }
-            if ($shop == 2){
+            if ($shop->status == 2){
                 return 3;//驳回
             }
         }

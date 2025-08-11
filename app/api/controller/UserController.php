@@ -10,6 +10,7 @@ use app\admin\model\UserIdentity;
 use app\admin\model\UserLayer;
 use app\api\basic\Base;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 use support\Request;
 use Tinywan\Jwt\Exception\JwtRefreshTokenExpiredException;
 
@@ -262,6 +263,29 @@ class UserController extends Base
             $item->team_count = UserLayer::where('parent_id', $item->id)->count();
         });
         return $this->success('成功', $team_list);
+    }
+
+    /**
+     * 修改密码
+     * @param Request $request
+     * @return \support\Response
+     */
+    function changePassword(Request $request)
+    {
+
+        $old_password = $request->input('old_password');
+        $new_password = $request->input('new_password');
+        $confirm_password = $request->input('confirm_password');
+        if ($new_password != $confirm_password) {
+            return $this->fail('密码不一致');
+        }
+        $user = $request->user();
+        if (!password_verify($old_password, $user->password)) {
+            return $this->fail('旧密码错误');
+        }
+        $user->password = password_hash($new_password, PASSWORD_DEFAULT);
+        $user->save();
+        return $this->success('成功');
     }
 
 
