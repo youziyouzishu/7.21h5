@@ -12,4 +12,11 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-return [];
+return [
+    'api' => [
+        \app\middleware\ApiAuth::class,
+    ],
+    'admin' => [
+        \plugin\admin\api\Middleware::class
+    ],
+];

@@ -13,7 +13,6 @@ class ApiAuth implements MiddlewareInterface
 {
     public function process(Request|\Webman\Http\Request $request, callable $handler): Response
     {
-        $request->source = $request->header('source');
         // 通过反射获取控制器哪些方法不需要登录
         if (!empty($request->controller)) {  #路由中return无实际controller
             $controller = new ReflectionClass($request->controller);

@@ -10,12 +10,12 @@ use app\admin\model\UserIdentity;
 use app\admin\model\UserLayer;
 use app\api\basic\Base;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 use support\Request;
 use Tinywan\Jwt\Exception\JwtRefreshTokenExpiredException;
 
 class UserController extends Base
 {
+
     /**
      * 获取个人信息
      * @param Request $request
@@ -29,7 +29,7 @@ class UserController extends Base
         }
         $row = User::find($request->user_id);
         if (empty($row)) {
-            throw new JwtRefreshTokenExpiredException();
+            throw new JwtRefreshTokenExpiredException('用户不存在');
         }
         return $this->success('成功', $row);
     }
