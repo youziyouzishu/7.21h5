@@ -51,7 +51,24 @@ class Account extends Base
         'created_at',
         'updated_at',
     ];
-    
+
+    protected $appends = [
+        'type_text',
+    ];
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function getTypeTextAttribute()
+    {
+        return [
+            1 => '银行卡',
+            2 => '微信',
+            3 => '支付宝',
+        ][$this->type]?:'';
+    }
     
     
 }

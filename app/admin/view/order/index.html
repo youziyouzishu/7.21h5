@@ -149,26 +149,14 @@
 						title: "买家",align: "center",
 						field: "user_id",
 						templet: function (d) {
-							let field = "user_id";
-							if (typeof d[field] == "undefined") return "";
-							let items = [];
-							layui.each((d[field] + "").split(","), function (k , v) {
-								items.push(apiResults[field][v] || v);
-							});
-							return util.escape(items.join(","));
+							return d.user?d.user.nickname:"";
 						}
 					},{
 						title: "卖家",align: "center",
 						field: "to_user_id",
-						templet: function (d) {
-							let field = "to_user_id";
-							if (typeof d[field] == "undefined") return "";
-							let items = [];
-							layui.each((d[field] + "").split(","), function (k , v) {
-								items.push(apiResults[field][v] || v);
-							});
-							return util.escape(items.join(","));
-						}
+                        templet: function (d) {
+                            return d.to_user?d.to_user.nickname:"";
+                        }
 					},{
 						title: "订单编号",align: "center",
 						field: "ordersn",

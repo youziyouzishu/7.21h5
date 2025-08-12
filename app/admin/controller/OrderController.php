@@ -28,7 +28,20 @@ class OrderController extends Crud
     {
         $this->model = new Order;
     }
-    
+
+    /**
+     * 查询
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+     */
+    public function select(Request $request): Response
+    {
+        [$where, $format, $limit, $field, $order] = $this->selectInput($request);
+        $query = $this->doSelect($where, $field, $order)->with(['user','toUser']);
+        return $this->doFormat($query, $format, $limit);
+    }
+
     /**
      * 浏览
      * @return Response

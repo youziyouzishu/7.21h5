@@ -21,6 +21,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Withdraw query()
+ * @property-read \app\admin\model\Account|null $account
  * @mixin \Eloquent
  */
 class Withdraw extends Base
@@ -59,6 +60,11 @@ class Withdraw extends Base
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    function account()
+    {
+        return $this->belongsTo(Account::class, 'account_id', 'id');
     }
 
     public function getStatusTextAttribute()

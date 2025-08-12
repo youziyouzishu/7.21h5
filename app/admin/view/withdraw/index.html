@@ -139,26 +139,14 @@
 					},{
 						title: "用户",align: "center",
 						field: "user_id",
-						templet: function (d) {
-							let field = "user_id";
-							if (typeof d[field] == "undefined") return "";
-							let items = [];
-							layui.each((d[field] + "").split(","), function (k , v) {
-								items.push(apiResults[field][v] || v);
-							});
-							return util.escape(items.join(","));
-						}
+                        templet: function (d) {
+                            return d.user?d.user.nickname:"";
+                        }
 					},{
 						title: "账户",align: "center",
 						field: "account_id",
 						templet: function (d) {
-							let field = "account_id";
-							if (typeof d[field] == "undefined") return "";
-							let items = [];
-							layui.each((d[field] + "").split(","), function (k , v) {
-								items.push(apiResults[field][v] || v);
-							});
-							return util.escape(items.join(","));
+							return d.account?d.account.truename+d.account.mobile+d.account.type_text+d.account.account:"";
 						}
 					},{
 						title: "提现金额",align: "center",
