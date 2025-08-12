@@ -51,6 +51,9 @@ use support\Db;
  * @property string $total_withdraw_amount 总提现金额
  * @property string $total_push_amount 累计直推金额
  * @property-read User|null $parent
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Report> $report
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $children
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Order> $allChildrenOrders
  * @mixin \Eloquent
  */
 class User extends Base
@@ -188,6 +191,22 @@ class User extends Base
     {
         return $this->belongsTo(self::class, 'parent_id', 'id');
     }
+
+    function report()
+    {
+        return $this->hasMany(Report::class, 'user_id', 'id');
+    }
+
+    function children()
+    {
+        return $this->hasMany(self::class, 'parent_id', 'id');
+    }
+
+    public function allChildrenOrders()
+    {
+        return $this->hasManyThrough(Order::class, self::class, 'parent_id', 'user_id', 'id', 'id');
+    }
+
 
 
 

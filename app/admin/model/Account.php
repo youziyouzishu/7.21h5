@@ -22,6 +22,8 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Account withoutTrashed()
+ * @property-read mixed $type_text
+ * @property-read \app\admin\model\User|null $user
  * @mixin \Eloquent
  */
 class Account extends Base

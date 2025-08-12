@@ -3,6 +3,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\User;
+use Carbon\Carbon;
 use support\Request;
 use support\Response;
 use app\admin\model\Order;
@@ -131,6 +132,9 @@ class OrderController extends Crud
                 $row->user->parent->total_push_amount += $row->push_amount;
                 $row->user->parent->save();
                 $row->user->save();
+                $request->setParams('post',[
+                    'finish_at' => Carbon::now()
+                ]);
             }
             return parent::update($request);
         }

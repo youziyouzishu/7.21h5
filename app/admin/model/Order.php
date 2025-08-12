@@ -23,7 +23,7 @@ use plugin\admin\app\model\Base;
  * @property string|null $platform_pay_image 平台支付凭证
  * @property int $is_copy 是否复制:0=否,1=是
  * @property \Illuminate\Support\Carbon|null $pay_at 支付时间
- * @property string|null $finish_at 完成时间
+ * @property \Illuminate\Support\Carbon|null $finish_at 完成时间
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
  * @property-read mixed $status_text
@@ -54,6 +54,7 @@ class Order extends Base
 
     protected $casts = [
         'pay_at' => 'datetime',
+        'finish_at' => 'datetime',
     ];
 
 
