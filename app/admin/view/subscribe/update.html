@@ -16,34 +16,6 @@
                 <div class="main-container mr-5">
                     
                     <div class="layui-form-item">
-                        <label class="layui-form-label required">用户</label>
-                        <div class="layui-input-block">
-                            <div name="user_id" id="user_id" required value="" ></div>
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">姓名</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="name" value="" required lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">金额</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="amount" value="" required lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">日期</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="date" id="date" required lay-verify="required" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-block">
                             <div name="status" id="status" value="" ></div>
@@ -113,41 +85,24 @@
                                 });
                             }
                         });
-                        
-                        // 字段 用户 user_id
-                        layui.use(["jquery", "xmSelect"], function() {
-                            let value = layui.$("#user_id").attr("value");
-                            let initValue = value ? value.split(",") : [];
-                            layui.xmSelect.render({
-                                el: "#user_id",
-                                name: "user_id",
-                                filterable: true,
-                                initValue: initValue,
-                                model: {"icon":"hidden","label":{"type":"text"}},
-                                clickClose: true,
-                                radio: true,
-                                layVerify: "required",
-                            })
-                        });
-                        
-                        // 字段 日期 date
-                        layui.use(["laydate"], function() {
-                            layui.laydate.render({
-                                elem: "#date",
-                        
-                            });
-                        })
-                        
+
                         // 字段 状态:0=待审核,1=已审核 status
                         layui.use(["jquery", "xmSelect"], function() {
                             let value = layui.$("#status").attr("value");
+                            let data = [{"value":"0","name":"待审核"},{"value":"1","name":"已审核"}];
+                            if (value === '0'){
+                                data = [{"value":"0","name":"待审核"},{"value":"1","name":"已审核"}];
+                            }
+                            if (value === '1'){
+                                data = [{"value":"1","name":"已审核"}];
+                            }
                             let initValue = value ? value.split(",") : [];
                             layui.xmSelect.render({
                                 el: "#status",
                                 name: "status",
                                 filterable: true,
                                 initValue: initValue,
-                                data: [{"value":"0","name":"待审核"},{"value":"1","name":"已审核"}],
+                                data: data,
                                 model: {"icon":"hidden","label":{"type":"text"}},
                                 clickClose: true,
                                 radio: true,

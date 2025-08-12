@@ -28,6 +28,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop query()
  * @property-read mixed $status_text
+ * @property-read \app\admin\model\User|null $user
  * @mixin \Eloquent
  */
 class Shop extends Base
@@ -77,6 +78,11 @@ class Shop extends Base
             1 => '通过',
             2 => '拒绝',
         ][$this->status]??'';
+    }
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 

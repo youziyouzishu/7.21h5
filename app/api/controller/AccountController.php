@@ -75,6 +75,9 @@ class AccountController extends Base
         if (!$user || !password_verify($password, $user->password)) {
             return $this->fail('用户名或密码错误');
         }
+        if ($user->status == 1) {
+            return $this->fail('用户被禁用');
+        }
         $token = JwtToken::generateToken([
             'id' => $user->id,
             'client' => JwtToken::TOKEN_CLIENT_MOBILE
