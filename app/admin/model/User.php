@@ -47,6 +47,10 @@ use support\Db;
  * @property string $total_service_amount 总服务费
  * @property string $total_amount 总金额(交易金额+客户收益)
  * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
+ * @property string $total_trade_amount 总交易金额
+ * @property string $total_withdraw_amount 总提现金额
+ * @property string $total_push_amount 累计直推金额
+ * @property-read User|null $parent
  * @mixin \Eloquent
  */
 class User extends Base
@@ -178,6 +182,11 @@ class User extends Base
     function shop()
     {
         return $this->hasOne(Shop::class, 'user_id', 'id');
+    }
+
+    function parent()
+    {
+        return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
 
