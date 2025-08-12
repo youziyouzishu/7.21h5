@@ -108,6 +108,11 @@ class OrderController extends Crud
             if ($row->status == 1 && $status == 2){
                 //后台确认  给这个用户上级反直推收益
                 User::changeMoney($row->push_amount,$row->user->parent_id,'直推收益');
+                //后台确认  给买家增加服务费
+                $row->user->total_service_amount += $row->service_amount;
+                //后台确认  给买家增加总金额
+                $row->user->total_amount += $row->trade_amount + $row->kehu_amount;
+                $row->user->save();
             }
             return parent::update($request);
         }

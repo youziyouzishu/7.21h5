@@ -27,6 +27,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity query()
  * @property-read mixed $status_text
+ * @property-read \app\admin\model\User|null $user
  * @mixin \Eloquent
  */
 class UserIdentity extends Base
@@ -76,6 +77,11 @@ class UserIdentity extends Base
             1 => '通过',
             2 => '拒绝',
         ][$this->status]??'';
+    }
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 

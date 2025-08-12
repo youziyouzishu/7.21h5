@@ -2,6 +2,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\User;
 use support\Request;
 use support\Response;
 use app\admin\model\UserIdentity;
@@ -60,6 +61,11 @@ class UserIdentityController extends Crud
     public function update(Request $request): Response
     {
         if ($request->method() === 'POST') {
+            $id = $request->input('id');
+            $name = $request->input('name');
+            $row = UserIdentity::findOrFail($id);
+            $row->user->nickname = $name;
+            $row->user->save();
             return parent::update($request);
         }
         return view('user-identity/update');

@@ -268,7 +268,7 @@ class UserController extends Base
                 $today_team_amount += $item->trade_amount + $item->kehu_amount;
                 $today_team_serrvice_amount += $item->service_amount;
             });
-        $team_list = User::whereIn('id', $team_ids)->each(function ($item) {
+        $team_list = User::whereIn('id', $team_ids)->get()->each(function ($item) {
             $item->team_count = UserLayer::where('parent_id', $item->id)->count();
         });
         return $this->success('成功', [
@@ -289,7 +289,7 @@ class UserController extends Base
     {
         $user = $request->user();
         $team_ids = UserLayer::where('parent_id', $user->id)->where('layer', 1)->pluck('user_id');
-        $team_list = User::whereIn('id', $team_ids)->each(function ($item) {
+        $team_list = User::whereIn('id', $team_ids)->get()->each(function ($item) {
             $item->team_count = UserLayer::where('parent_id', $item->id)->count();
         });
         return $this->success('成功', $team_list);
