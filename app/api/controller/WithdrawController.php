@@ -104,7 +104,7 @@ class WithdrawController extends Base
      */
     function getWithdrawList(Request $request)
     {
-        $rows = Withdraw::where(['user_id' => $request->user_id])->orderBy('id', 'desc')->paginate()->items();
+        $rows = Withdraw::with(['account'])->where(['user_id' => $request->user_id])->orderBy('id', 'desc')->paginate()->items();
         return $this->success('成功', $rows);
     }
 

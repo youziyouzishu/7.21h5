@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\admin\model\Order;
+use app\admin\model\Report;
 use app\admin\model\Shop;
 use app\admin\model\Subscribe;
 use app\admin\model\User;
@@ -316,6 +317,17 @@ class UserController extends Base
         $user->password = password_hash($new_password, PASSWORD_DEFAULT);
         $user->save();
         return $this->success('成功');
+    }
+
+    /**
+     * 团队统计
+     * @param Request $request
+     * @return \support\Response
+     */
+    function StatisticalTeam(Request $request)
+    {
+        $rows = Report::where('user_id', $request->user_id)->orderByDesc('date')->paginate()->items();
+        return $this->success('成功', $rows);
     }
 
 
