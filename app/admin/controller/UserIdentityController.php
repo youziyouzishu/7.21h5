@@ -75,9 +75,8 @@ class UserIdentityController extends Crud
     {
         if ($request->method() === 'POST') {
             $id = $request->input('id');
-            $name = $request->input('name');
             $row = UserIdentity::findOrFail($id);
-            $row->user->nickname = $name;
+            $row->user->nickname = $row->name;
             $row->user->save();
             return parent::update($request);
         }
