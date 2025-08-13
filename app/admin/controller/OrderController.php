@@ -126,8 +126,8 @@ class OrderController extends Crud
                 $row->user->total_service_amount += $row->service_amount;
                 //后台确认  给买家增加总金额
                 $row->user->total_amount += $row->trade_amount + $row->kehu_amount;
-                //后台确认  总交易金额
-                $row->user->total_trade_amount += $row->trade_amount;
+                //后台确认  总订单收益
+                $row->user->total_trade_amount += $row->kehu_amount;
                 //后台确认  总直推金额
                 $row->user->parent->total_push_amount += $row->push_amount;
                 $row->user->parent->save();

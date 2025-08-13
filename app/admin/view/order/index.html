@@ -185,6 +185,18 @@
                         title: "直推费率",align: "center",
                         field: "push_rate",
                     },{
+                        title: "用户支付凭证",align: "center",
+                        field: "user_pay_image",
+                        templet: function (d) {
+                            return '<img src="'+encodeURI(d['user_pay_image'])+'" style="max-width:32px;max-height:32px;" alt="" />'
+                        }
+                    },{
+                        title: "平台支付凭证",align: "center",
+                        field: "platform_pay_image",
+                        templet: function (d) {
+                            return '<img src="'+encodeURI(d['platform_pay_image'])+'" style="max-width:32px;max-height:32px;" alt="" />'
+                        }
+                    },{
 						title: "状态",align: "center",
 						field: "status",
 						templet: function (d) {

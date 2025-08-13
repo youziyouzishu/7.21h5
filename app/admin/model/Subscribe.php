@@ -2,6 +2,7 @@
 
 namespace app\admin\model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
 
 
@@ -22,6 +23,7 @@ use plugin\admin\app\model\Base;
  */
 class Subscribe extends Base
 {
+    use SoftDeletes;
     /**
      * The table associated with the model.
      *
