@@ -14,12 +14,25 @@
 
             <div class="mainBox">
                 <div class="main-container mr-5">
-
-
+                    
                     <div class="layui-form-item">
-                        <label class="layui-form-label required">状态</label>
+                        <label class="layui-form-label required">图片</label>
                         <div class="layui-input-block">
-                            <div name="status" id="status" required value="" ></div>
+                            <img class="img-3" src=""/>
+                            <input type="text" style="display:none" name="image" value="" />
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="image"  permission="app.admin.upload.image">
+                                <i class="layui-icon layui-icon-upload"></i>上传图片
+                            </button>
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-image"  permission="app.admin.upload.attachment">
+                                <i class="layui-icon layui-icon-align-left"></i>选择图片
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">权重</label>
+                        <div class="layui-input-block">
+                            <input type="number" name="weight" value="" class="layui-input">
                         </div>
                     </div>
                     
@@ -48,8 +61,8 @@
 
             // 相关接口
             const PRIMARY_KEY = "id";
-            const SELECT_API = "/admin/order/select" + location.search;
-            const UPDATE_API = "/admin/order/update";
+            const SELECT_API = "/admin/banner/select" + location.search;
+            const UPDATE_API = "/admin/banner/update";
             // 获取数据库记录
             layui.use(["form", "util", "popup"], function () {
                 let $ = layui.$;
@@ -86,31 +99,35 @@
                                 });
                             }
                         });
-
-                        // 字段 状态:0=待付款,1=待确认,2=已确认 status
-                        layui.use(["jquery", "xmSelect"], function() {
-                            let value = layui.$("#status").attr("value");
-                            let data = [{"value":"0","name":"待付款"},{"value":"1","name":"待确认"},{"value":"2","name":"已确认"}];
-                            if (value === '0'){
-                                data = [{"value":"0","name":"待付款"}];
-                            }
-                            if (value === '1'){
-                                data = [{"value":"1","name":"待确认"},{"value":"2","name":"已确认"}];
-                            }
-                            if (value === '2'){
-                                data = [{"value":"2","name":"已确认"}];
-                            }
-                            let initValue = value ? value.split(",") : [];
-                            layui.xmSelect.render({
-                                el: "#status",
-                                name: "status",
-                                filterable: false,
-                                initValue: initValue,
-                                data : data,
-                                layVerify: "required",
-                                clickClose: true,
-                                radio: true,
-                            })
+                        
+                        // 字段 图片 image
+                        layui.use(["upload", "layer"], function() {
+                            let input = layui.$("#image").prev();
+                            input.prev().attr("src", input.val());
+                            layui.$("#attachment-choose-image").on("click", function() {
+                                parent.layer.open({
+                                    type: 2,
+                                    title: "选择附件",
+                                    content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                                    area: ["95%", "90%"],
+                                    success: function (layero, index) {
+                                        parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                            input.val(data.url).prev().attr("src", data.url);
+                                        });
+                                    }
+                                });
+                            });
+                            layui.upload.render({
+                                elem: "#image",
+                                acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                                url: "/app/admin/upload/image",
+                                multiple: 0,
+                                field: "__file__",
+                                done: function (res) {
+                                    if (res.code > 0) return layui.layer.msg(res.msg);
+                                    this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                                }
+                            });
                         });
                         
                         
