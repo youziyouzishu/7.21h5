@@ -39,6 +39,7 @@ class AccountController extends Base
             'password' => password_hash($password, PASSWORD_DEFAULT),
             'invite_code' => User::generateInviteCode(),
             'parent_id' => $parent->id,
+            'avatar' => '/app/admin/avatar.png'
         ]);
 
         // 增加直推关系

@@ -76,7 +76,7 @@ class UserController extends Base
     function editUserIdentity(Request $request)
     {
         $user = User::find($request->user_id);
-        if (!$user->userIdentity || $user->userIdentity->status != 2){
+        if (!$user->userIdentity){
             return $this->fail('请先完成个人认证');
         }
 
@@ -91,7 +91,7 @@ class UserController extends Base
     function editUserShop(Request $request)
     {
         $user = User::find($request->user_id);
-        if (!$user->shop || $user->shop->status != 2){
+        if (!$user->shop){
             return $this->fail('请先完成商铺认证');
         }
 
@@ -195,8 +195,12 @@ class UserController extends Base
     function getOrderList(Request $request)
     {
         $status = $request->input('status');#状态 1待付款  2待确认  3已确认
-        $list = Order::where(function ($query) use ($request) {
-            $query->where('user_id', $request->user_id)->orWhere('to_user_id', $request->user_id);
+        $list = Order::where(function ($query) use ($request,$status) {
+            if ($status == 2){
+                $query->where('user_id', $request->user_id)->orWhere('to_user_id', $request->user_id);
+            }else{
+                $query->where('user_id', $request->user_id);
+            }
         })
             ->when($status, function ($query) use ($status) {
                 if ($status == 1) {

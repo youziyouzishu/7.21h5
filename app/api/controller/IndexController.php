@@ -10,14 +10,10 @@ use support\Request;
 
 class IndexController extends Base
 {
-    protected array $noNeedLogin = ['*'];
+    protected array $noNeedLogin = ["*"];
     public function index(Request $request)
     {
-        $rows = UserIdentity::where(['status' => 1])->get();
-        foreach ($rows as $row) {
-            $row->user->nickname = $row->name;
-            $row->user->save();
-        }
+
     }
 
 }
