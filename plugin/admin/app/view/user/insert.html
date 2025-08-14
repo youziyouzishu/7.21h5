@@ -12,21 +12,15 @@
 
             <div class="mainBox">
                 <div class="main-container mr-5">
-                    
+
+
                     <div class="layui-form-item">
-                        <label class="layui-form-label required">用户名</label>
+                        <label class="layui-form-label required">手机</label>
                         <div class="layui-input-block">
-                            <input type="text" name="username" value="" required lay-verify="required" class="layui-input">
+                            <input type="text" name="mobile" value="" required lay-verify="required" class="layui-input">
                         </div>
                     </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label required">昵称</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="nickname" value="" required lay-verify="required" class="layui-input">
-                        </div>
-                    </div>
-                    
+
                     <div class="layui-form-item">
                         <label class="layui-form-label required">密码</label>
                         <div class="layui-input-block">
@@ -35,14 +29,7 @@
                     </div>
                     
                     <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
-                        <div class="layui-input-block">
-                            <div name="sex" id="sex" value="1" ></div>
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">头像</label>
+                        <label class="layui-form-label required">头像</label>
                         <div class="layui-input-block">
                             <img class="img-3" src=""/>
                             <input type="text" style="display:none" name="avatar" value="" />
@@ -54,76 +41,19 @@
                             </button>
                         </div>
                     </div>
-                    
+
+
                     <div class="layui-form-item">
-                        <label class="layui-form-label">邮箱</label>
+                        <label class="layui-form-label required">邀请码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="email" value="" class="layui-input">
+                            <input type="text" name="invited_code" value="" required lay-verify="required" class="layui-input">
                         </div>
                     </div>
+
+
                     
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">手机</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="mobile" value="" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">等级</label>
-                        <div class="layui-input-block">
-                            <input type="number" name="level" value="0" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">生日</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="birthday" id="birthday" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">余额(元)</label>
-                        <div class="layui-input-block">
-                            <input type="number" name="money" value="0" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">积分</label>
-                        <div class="layui-input-block">
-                            <input type="number" name="score" value="0" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">登录时间</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="last_time" id="last_time" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">登录ip</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="last_ip" value="" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">注册时间</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="join_time" id="join_time" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">注册ip</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="join_ip" value="" class="layui-input">
-                        </div>
-                    </div>
+
+
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">禁用</label>

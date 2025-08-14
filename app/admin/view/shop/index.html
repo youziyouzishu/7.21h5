@@ -164,22 +164,22 @@
 						title: "天猫店铺地址",align: "center",
 						field: "tm_address",
 					},{
-						title: "支付宝账号",align: "center",
+						title: "收货地址",align: "center",
 						field: "zfb_account",
 					},{
-						title: "支付宝远程收款码",align: "center",
+						title: "店铺招牌照片",align: "center",
 						field: "zfb_yc_qr",
 						templet: function (d) {
 							return '<img src="'+encodeURI(d['zfb_yc_qr'])+'" style="max-width:32px;max-height:32px;" alt="" />'
 						}
 					},{
-						title: "支付宝商家收款码",align: "center",
+						title: "店铺前台照片",align: "center",
 						field: "zfb_sj_qr",
 						templet: function (d) {
 							return '<img src="'+encodeURI(d['zfb_sj_qr'])+'" style="max-width:32px;max-height:32px;" alt="" />'
 						}
 					},{
-						title: "微信商家收款码",align: "center",
+						title: "店铺内景图",align: "center",
 						field: "wx_sj_qr",
 						templet: function (d) {
 							return '<img src="'+encodeURI(d['wx_sj_qr'])+'" style="max-width:32px;max-height:32px;" alt="" />'

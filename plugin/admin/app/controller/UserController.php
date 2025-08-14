@@ -2,6 +2,7 @@
 
 namespace plugin\admin\app\controller;
 
+use app\admin\model\UserLayer;
 use plugin\admin\app\model\User;
 use support\exception\BusinessException;
 use support\Request;
@@ -47,7 +48,39 @@ class UserController extends Crud
     public function insert(Request $request): Response
     {
         if ($request->method() === 'POST') {
-            return parent::insert($request);
+            $mobile = $request->input('mobile');
+            $password = $request->input('password');
+            $invite_code = $request->input('invited_code');
+
+            $exists = User::where('mobile', $mobile)->exists();
+            if ($exists) {
+                return $this->fail('手机号已存在');
+            }
+            if (empty($invite_code) || !$parent = User::where('invite_code', $invite_code)->first()) {
+                return $this->fail('邀请码不存在');
+            }
+            $user = \app\admin\model\User::create([
+                'mobile' => $mobile,
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'invite_code' => \app\admin\model\User::generateInviteCode(),
+                'parent_id' => $parent->id,
+                'avatar' => '/app/admin/avatar.png'
+            ]);
+
+            // 增加直推关系
+            UserLayer::create([
+                'user_id' => $user->id,
+                'parent_id' => $parent->id,
+                'layer' => 1
+            ]);
+            UserLayer::where('user_id', $parent->id)->get()->each(function (UserLayer $item) use ($user) {
+                UserLayer::create([
+                    'user_id' => $user->id,
+                    'parent_id' => $item->parent_id,
+                    'layer' => $item->layer + 1
+                ]);
+            });
+            return $this->success('注册成功');
         }
         return raw_view('user/insert');
     }

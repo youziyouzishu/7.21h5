@@ -76,7 +76,7 @@ class UserController extends Base
     function editUserIdentity(Request $request)
     {
         $user = User::find($request->user_id);
-        if (!$user->userIdentity){
+        if (!$user->userIdentity || $user->userIdentity->status != 2){
             return $this->fail('请先完成个人认证');
         }
 
@@ -91,7 +91,7 @@ class UserController extends Base
     function editUserShop(Request $request)
     {
         $user = User::find($request->user_id);
-        if (!$user->shop){
+        if (!$user->shop || $user->shop->status != 2){
             return $this->fail('请先完成商铺认证');
         }
 
@@ -156,6 +156,9 @@ class UserController extends Base
         $name = $request->input('name');
         $amount = $request->input('amount');
         $date = $request->input('date');
+        if (empty($name) || empty($amount) || empty($date)) {
+            return $this->fail('请填写完整信息');
+        }
         $row = Subscribe::create([
             'user_id' => $request->user_id,
             'name' => $name,
