@@ -16,6 +16,118 @@
                 <div class="main-container mr-5">
 
                     <div class="layui-form-item">
+                        <label class="layui-form-label required">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">营业执照</label>
+                        <div class="layui-input-block">
+                            <img class="img-3" src=""/>
+                            <input type="text" style="display:none" name="image" value="" />
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="image"  permission="app.admin.upload.image">
+                                <i class="layui-icon layui-icon-upload"></i>上传图片
+                            </button>
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-image"  permission="app.admin.upload.attachment">
+                                <i class="layui-icon layui-icon-align-left"></i>选择图片
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">淘宝店铺地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tb_address" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">阿里店铺地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="ali_address" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">闲鱼店铺地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="xy_address" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">天猫店铺地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="tm_address" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">支付宝账号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="zfb_account" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">支付宝远程收款码</label>
+                        <div class="layui-input-block">
+                            <img class="img-3" src=""/>
+                            <input type="text" style="display:none" name="zfb_yc_qr" value="" />
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="zfb_yc_qr"  permission="app.admin.upload.image">
+                                <i class="layui-icon layui-icon-upload"></i>上传图片
+                            </button>
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-zfb_yc_qr"  permission="app.admin.upload.attachment">
+                                <i class="layui-icon layui-icon-align-left"></i>选择图片
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">支付宝商家收款码</label>
+                        <div class="layui-input-block">
+                            <img class="img-3" src=""/>
+                            <input type="text" style="display:none" name="zfb_sj_qr" value="" />
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="zfb_sj_qr"  permission="app.admin.upload.image">
+                                <i class="layui-icon layui-icon-upload"></i>上传图片
+                            </button>
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-zfb_sj_qr"  permission="app.admin.upload.attachment">
+                                <i class="layui-icon layui-icon-align-left"></i>选择图片
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">微信商家收款码</label>
+                        <div class="layui-input-block">
+                            <img class="img-3" src=""/>
+                            <input type="text" style="display:none" name="wx_sj_qr" value="" />
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="wx_sj_qr"  permission="app.admin.upload.image">
+                                <i class="layui-icon layui-icon-upload"></i>上传图片
+                            </button>
+                            <button type="button" class="pear-btn pear-btn-primary pear-btn-sm" id="attachment-choose-wx_sj_qr"  permission="app.admin.upload.attachment">
+                                <i class="layui-icon layui-icon-align-left"></i>选择图片
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">银行卡号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bank_account" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label required">银行名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bank_name" value="" required lay-verify="required" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
                         <label class="layui-form-label">状态</label>
                         <div class="layui-input-block">
                             <div name="status" id="status" value="" ></div>
@@ -91,6 +203,126 @@
                                     );
                                 });
                             }
+                        });
+
+                        // 字段 营业执照 image
+                        layui.use(["upload", "layer"], function() {
+                            let input = layui.$("#image").prev();
+                            input.prev().attr("src", input.val());
+                            layui.$("#attachment-choose-image").on("click", function() {
+                                parent.layer.open({
+                                    type: 2,
+                                    title: "选择附件",
+                                    content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                                    area: ["95%", "90%"],
+                                    success: function (layero, index) {
+                                        parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                            input.val(data.url).prev().attr("src", data.url);
+                                        });
+                                    }
+                                });
+                            });
+                            layui.upload.render({
+                                elem: "#image",
+                                acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                                url: "/app/admin/upload/image",
+                                multiple: 0,
+                                field: "__file__",
+                                done: function (res) {
+                                    if (res.code > 0) return layui.layer.msg(res.msg);
+                                    this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                                }
+                            });
+                        });
+
+                        // 字段 支付宝远程收款码 zfb_yc_qr
+                        layui.use(["upload", "layer"], function() {
+                            let input = layui.$("#zfb_yc_qr").prev();
+                            input.prev().attr("src", input.val());
+                            layui.$("#attachment-choose-zfb_yc_qr").on("click", function() {
+                                parent.layer.open({
+                                    type: 2,
+                                    title: "选择附件",
+                                    content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                                    area: ["95%", "90%"],
+                                    success: function (layero, index) {
+                                        parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                            input.val(data.url).prev().attr("src", data.url);
+                                        });
+                                    }
+                                });
+                            });
+                            layui.upload.render({
+                                elem: "#zfb_yc_qr",
+                                acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                                url: "/app/admin/upload/image",
+                                multiple: 0,
+                                field: "__file__",
+                                done: function (res) {
+                                    if (res.code > 0) return layui.layer.msg(res.msg);
+                                    this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                                }
+                            });
+                        });
+
+                        // 字段 支付宝商家收款码 zfb_sj_qr
+                        layui.use(["upload", "layer"], function() {
+                            let input = layui.$("#zfb_sj_qr").prev();
+                            input.prev().attr("src", input.val());
+                            layui.$("#attachment-choose-zfb_sj_qr").on("click", function() {
+                                parent.layer.open({
+                                    type: 2,
+                                    title: "选择附件",
+                                    content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                                    area: ["95%", "90%"],
+                                    success: function (layero, index) {
+                                        parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                            input.val(data.url).prev().attr("src", data.url);
+                                        });
+                                    }
+                                });
+                            });
+                            layui.upload.render({
+                                elem: "#zfb_sj_qr",
+                                acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                                url: "/app/admin/upload/image",
+                                multiple: 0,
+                                field: "__file__",
+                                done: function (res) {
+                                    if (res.code > 0) return layui.layer.msg(res.msg);
+                                    this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                                }
+                            });
+                        });
+
+                        // 字段 微信商家收款码 wx_sj_qr
+                        layui.use(["upload", "layer"], function() {
+                            let input = layui.$("#wx_sj_qr").prev();
+                            input.prev().attr("src", input.val());
+                            layui.$("#attachment-choose-wx_sj_qr").on("click", function() {
+                                parent.layer.open({
+                                    type: 2,
+                                    title: "选择附件",
+                                    content: "/app/admin/upload/attachment?ext=jpg,jpeg,png,gif,bmp",
+                                    area: ["95%", "90%"],
+                                    success: function (layero, index) {
+                                        parent.layui.$("#layui-layer" + index).data("callback", function (data) {
+                                            input.val(data.url).prev().attr("src", data.url);
+                                        });
+                                    }
+                                });
+                            });
+                            layui.upload.render({
+                                elem: "#wx_sj_qr",
+                                acceptMime: "image/gif,image/jpeg,image/jpg,image/png",
+                                url: "/app/admin/upload/image",
+                                multiple: 0,
+                                field: "__file__",
+                                done: function (res) {
+                                    if (res.code > 0) return layui.layer.msg(res.msg);
+                                    this.item.prev().val(res.data.url).prev().attr("src", res.data.url);
+                                }
+                            });
                         });
                         
                         // 字段 状态:0=待审核,1=通过,2=拒绝 status
