@@ -55,6 +55,7 @@ use support\Db;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, User> $children
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Order> $allChildrenOrders
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Order> $orders
+ * @property int|null $admin_id 代理商
  * @mixin \Eloquent
  */
 class User extends Base
@@ -211,6 +212,11 @@ class User extends Base
     function orders()
     {
         return $this->hasMany(Order::class, 'user_id', 'id');
+    }
+
+    function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 
 

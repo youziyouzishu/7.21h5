@@ -33,6 +33,11 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order query()
  * @property-read \app\admin\model\User|null $toUser
  * @property-read \app\admin\model\User|null $user
+ * @property int|null $admin_id 代理商
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order withoutTrashed()
  * @mixin \Eloquent
  */
 class Order extends Base

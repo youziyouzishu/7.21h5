@@ -25,7 +25,7 @@ class UserController extends Crud
      */
     public function __construct()
     {
-        $this->model = new User;
+        $this->model = new \app\admin\model\User;
     }
 
     /**

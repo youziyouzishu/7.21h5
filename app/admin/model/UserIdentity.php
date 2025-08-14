@@ -29,6 +29,10 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity query()
  * @property-read mixed $status_text
  * @property-read \app\admin\model\User|null $user
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity withoutTrashed()
  * @mixin \Eloquent
  */
 class UserIdentity extends Base

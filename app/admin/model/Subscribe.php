@@ -19,6 +19,11 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe query()
  * @property-read mixed $status_text
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
+ * @property-read \app\admin\model\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe withoutTrashed()
  * @mixin \Eloquent
  */
 class Subscribe extends Base
