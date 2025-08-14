@@ -142,6 +142,7 @@
                             url: "/app/admin/user/select",
                             dataType: "json",
                             data: {
+                                mobile: val,
                                 page: pageIndex,
                             },
                             success: function (res) {
@@ -182,7 +183,7 @@
                             url: "/app/admin/user/select",
                             dataType: "json",
                             data: {
-                                nickname: ['like',val],
+                                mobile: val,
                                 page: pageIndex,
                             },
                             success: function (res) {
