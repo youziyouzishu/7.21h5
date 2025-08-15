@@ -31,6 +31,22 @@ class Banner extends Base
      */
     protected $primaryKey = 'id';
     
-    
-    
+    /**
+     * 可批量赋值的字段
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'image',
+        'weight',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 }

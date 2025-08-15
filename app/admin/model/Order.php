@@ -4,9 +4,11 @@ namespace app\admin\model;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
-
+use app\admin\model\User;
 
 /**
+ * 订单模型
+ *
  * @property int $id 主键
  * @property int $user_id 买家
  * @property int $to_user_id 卖家
@@ -27,64 +29,98 @@ use plugin\admin\app\model\Base;
  * @property \Illuminate\Support\Carbon|null $finish_at 完成时间
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @property-read mixed $status_text
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order query()
- * @property-read \app\admin\model\User|null $toUser
- * @property-read \app\admin\model\User|null $user
+ * @property-read string $status_text 状态文本
+ * @property-read User|null $toUser 卖家用户
+ * @property-read User|null $user 买家用户
  * @property int|null $admin_id 代理商
  * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Order withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Order withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|Order withoutTrashed()
  * @mixin \Eloquent
  */
 class Order extends Base
 {
     use SoftDeletes;
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+
+    /** @var string 关联表名 */
     protected $table = 'wa_orders';
 
-    /**
-     * The primary key associated with the table.
-     *
-     * @var string
-     */
+    /** @var string 主键 */
     protected $primaryKey = 'id';
 
+    /** @var array 追加的访问器 */
     protected $appends = ['status_text'];
 
+    /** @var array 字段类型转换 */
     protected $casts = [
         'pay_at' => 'datetime',
         'finish_at' => 'datetime',
     ];
 
+    /** @var array 可批量赋值字段 */
+    protected $fillable = [
+        'user_id',
+        'to_user_id',
+        'ordersn',
+        'service_rate',
+        'kehu_rate',
+        'push_rate',
+        'goods_name',
+        'trade_amount',
+        'service_amount',
+        'kehu_amount',
+        'push_amount',
+        'status',
+        'user_pay_image',
+        'platform_pay_image',
+        'is_copy',
+        'pay_at',
+        'finish_at',
+        'admin_id',
+        'created_at',
+        'updated_at',
+    ];
 
-    public function getStatusTextAttribute()
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * 获取状态文本
+     *
+     * @return string
+     */
+    public function getStatusTextAttribute(): string
     {
-        return [
+        $map = [
             0 => '待付款',
             1 => '待确认',
             2 => '已确认',
-        ][$this->status]?:'';
+        ];
+        return $map[$this->status] ?? '';
     }
 
-    function user()
+    /**
+     * 买家用户关联
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    function toUser()
+    /**
+     * 卖家用户关联
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function toUser()
     {
         return $this->belongsTo(User::class, 'to_user_id', 'id');
     }
-
-
-
-
 }

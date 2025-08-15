@@ -42,6 +42,33 @@ class Admin extends Base
      */
     protected $primaryKey = 'id';
     
-    
-    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'username',
+        'nickname',
+        'password',
+        'avatar',
+        'email',
+        'mobile',
+        'login_at',
+        'status',
+        'zfb_sj_qr',
+        'zfb_yc_qr',
+        'wx_sj_qr',
+        'bank_account',
+        'bank_name',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 }

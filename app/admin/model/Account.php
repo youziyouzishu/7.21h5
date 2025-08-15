@@ -54,6 +54,13 @@ class Account extends Base
         'updated_at',
     ];
 
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
     protected $appends = [
         'type_text',
     ];

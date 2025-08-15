@@ -37,8 +37,19 @@ class UserLayer extends Base
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'user_id', 'parent_id', 'layer'
+        'user_id',
+        'parent_id',
+        'layer',
+        'created_at',
+        'updated_at',
     ];
+
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
     function user()
     {

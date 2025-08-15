@@ -21,12 +21,12 @@ use support\Db;
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
  * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UsersAddress withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress withoutTrashed()
  * @property string $lat 纬度
  * @property string $lng 经度
  * @mixin \Eloquent
@@ -61,7 +61,16 @@ class UserAddress extends Base
         'address',
         'lat',
         'lng',
+        'created_at',
+        'updated_at',
     ];
+
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
     function user()
     {

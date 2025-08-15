@@ -49,9 +49,17 @@ class Subscribe extends Base
         'amount',
         'date',
         'status',
+        'reason',
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
     protected $appends = [
         'status_text',

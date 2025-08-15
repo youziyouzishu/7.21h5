@@ -100,17 +100,23 @@ class User extends Base
         'join_time',
         'join_ip',
         'token',
-        'invite_code',
         'role',
         'status',
-        'parent_id'
+        'invite_code',
+        'parent_id',
+        'total_service_amount',
+        'total_amount',
+        'total_trade_amount',
+        'created_at',
+        'updated_at',
     ];
 
-    protected $appends = [
-        'user_identity_status',
-        'shop_status'
-    ];
-
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
     public static function changeMoney($money, $user_id, $memo)
     {

@@ -20,6 +20,7 @@ class AccountController extends Base
      */
     function register(Request $request)
     {
+
         $mobile = $request->input('mobile');
         $password = $request->input('password');
         $confirm_password = $request->input('confirm_password');
