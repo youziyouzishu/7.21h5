@@ -88,7 +88,7 @@ class OrderController extends Crud
             $id = $request->input('id');
             $row = Order::findOrFail($id);
 
-            $trade_amount = $row->trade_amount + $row->service_amount + $row->kehu_amount + $row->push_amount;
+            $trade_amount = $row->trade_amount + $row->service_amount + $row->kehu_amount;
             $request->setParams('post',[
                 'ordersn' => generateOrderSn(),
                 'service_amount' => bcmul($trade_amount, $row->service_rate,2),

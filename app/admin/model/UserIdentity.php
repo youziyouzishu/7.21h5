@@ -5,8 +5,9 @@ namespace app\admin\model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
 
-
 /**
+ * Class UserIdentity
+ *
  * @property int $id 主键
  * @property int $user_id 用户
  * @property string $name 真实姓名
@@ -24,20 +25,21 @@ use plugin\admin\app\model\Base;
  * @property string|null $reason 原因
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity query()
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
  * @property-read mixed $status_text
  * @property-read \app\admin\model\User|null $user
- * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|UserIdentity withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity query()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity withoutTrashed()
  * @mixin \Eloquent
  */
 class UserIdentity extends Base
 {
     use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -52,11 +54,18 @@ class UserIdentity extends Base
      */
     protected $primaryKey = 'id';
 
-    protected $appends = [
-        'status_text'
-    ];
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'name',
@@ -77,29 +86,48 @@ class UserIdentity extends Base
     ];
 
     /**
-     * 是否自动维护时间戳
+     * The attributes that should be mutated to dates.
      *
-     * @var bool
+     * @var array
      */
-    public $timestamps = true;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
-    public function getStatusTextAttribute()
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'status_text'
+    ];
+
+    /**
+     * 获取状态文本
+     *
+     * @return string
+     */
+    public function getStatusTextAttribute(): string
     {
-        return [
+        $map = [
             0 => '待审核',
             1 => '通过',
             2 => '拒绝',
-        ][$this->status]??'';
+        ];
+
+        return $map[$this->status] ?? '';
     }
 
-    function user()
+    /**
+     * 关联用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
-
-
-
-
 }

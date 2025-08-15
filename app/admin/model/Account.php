@@ -5,31 +5,32 @@ namespace app\admin\model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
 
-
 /**
- * @property int $id 主键
- * @property int $user_id 用户
- * @property string $truename 真实姓名
- * @property string $mobile 手机号
- * @property int $type 类型:1=银行卡,2=微信,3=支付宝
- * @property string $account 账户
- * @property \Illuminate\Support\Carbon|null $created_at 创建时间
- * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account query()
- * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Account withoutTrashed()
+ * Class Account
+ *
+ * @property int $id                 主键
+ * @property int $user_id            用户
+ * @property string $truename       真实姓名
+ * @property string $mobile         手机号
+ * @property int $type              类型:1=银行卡,2=微信,3=支付宝
+ * @property string $account        账户
+ * @property \Illuminate\Support\Carbon|null $created_at  创建时间
+ * @property \Illuminate\Support\Carbon|null $updated_at  更新时间
+ * @property \Illuminate\Support\Carbon|null $deleted_at  删除时间
  * @property-read mixed $type_text
  * @property-read \app\admin\model\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Account newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Account withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|Account withoutTrashed()
  * @mixin \Eloquent
  */
 class Account extends Base
 {
-
     use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -44,6 +45,18 @@ class Account extends Base
      */
     protected $primaryKey = 'id';
 
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'truename',
@@ -55,29 +68,48 @@ class Account extends Base
     ];
 
     /**
-     * 是否自动维护时间戳
+     * The attributes that should be mutated to dates.
      *
-     * @var bool
+     * @var array
      */
-    public $timestamps = true;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = [
         'type_text',
     ];
 
-    function user()
+    /**
+     * 关联用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function getTypeTextAttribute()
+    /**
+     * 获取类型文本
+     *
+     * @return string
+     */
+    public function getTypeTextAttribute(): string
     {
-        return [
+        $map = [
             1 => '银行卡',
             2 => '微信',
             3 => '支付宝',
-        ][$this->type]?:'';
+        ];
+
+        return $map[$this->type] ?? '';
     }
-    
-    
 }

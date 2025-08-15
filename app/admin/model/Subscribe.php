@@ -5,8 +5,9 @@ namespace app\admin\model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
 
-
 /**
+ * Class Subscribe
+ *
  * @property int $id 主键
  * @property int $user_id 用户
  * @property string $name 姓名
@@ -15,20 +16,21 @@ use plugin\admin\app\model\Base;
  * @property int $status 状态:0=待审核,1=已审核
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe query()
- * @property-read mixed $status_text
  * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
+ * @property-read mixed $status_text
  * @property-read \app\admin\model\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Subscribe withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|Subscribe withoutTrashed()
  * @mixin \Eloquent
  */
 class Subscribe extends Base
 {
     use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -43,6 +45,18 @@ class Subscribe extends Base
      */
     protected $primaryKey = 'id';
 
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'name',
@@ -55,29 +69,47 @@ class Subscribe extends Base
     ];
 
     /**
-     * 是否自动维护时间戳
+     * The attributes that should be mutated to dates.
      *
-     * @var bool
+     * @var array
      */
-    public $timestamps = true;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = [
         'status_text',
     ];
 
-    public function getStatusTextAttribute()
+    /**
+     * 获取状态文本
+     *
+     * @return string
+     */
+    public function getStatusTextAttribute(): string
     {
-        return [
+        $map = [
             0 => '待审核',
             1 => '已审核',
-        ][$this->status]??'';
+        ];
+
+        return $map[$this->status] ?? '';
     }
 
+    /**
+     * 关联用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
-
 }

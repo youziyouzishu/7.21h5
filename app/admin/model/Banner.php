@@ -5,14 +5,17 @@ namespace app\admin\model;
 use plugin\admin\app\model\Base;
 
 /**
- * @property integer $id 主键(主键)
- * @property string $image 图片
- * @property integer $weight 权重
- * @property string $created_at 创建时间
- * @property string $updated_at 更新时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Banner query()
+ * Class Banner
+ *
+ * @property int $id
+ * @property string|null $image 图片地址
+ * @property string|null $url 跳转链接
+ * @property int $sort 排序
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Banner newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Banner newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Banner query()
  * @mixin \Eloquent
  */
 class Banner extends Base
@@ -30,15 +33,16 @@ class Banner extends Base
      * @var string
      */
     protected $primaryKey = 'id';
-    
+
     /**
-     * 可批量赋值的字段
+     * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
         'image',
-        'weight',
+        'url',
+        'sort',
         'created_at',
         'updated_at',
     ];

@@ -5,8 +5,9 @@ namespace app\admin\model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use plugin\admin\app\model\Base;
 
-
 /**
+ * Class Shop
+ *
  * @property int $id 主键
  * @property int $user_id 用户
  * @property string $name 姓名
@@ -25,20 +26,21 @@ use plugin\admin\app\model\Base;
  * @property string|null $reason 原因
  * @property \Illuminate\Support\Carbon|null $created_at 创建时间
  * @property \Illuminate\Support\Carbon|null $updated_at 更新时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop query()
+ * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
  * @property-read mixed $status_text
  * @property-read \app\admin\model\User|null $user
- * @property \Illuminate\Support\Carbon|null $deleted_at 删除时间
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop withTrashed(bool $withTrashed = true)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Shop withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop withTrashed(bool $withTrashed = true)
+ * @method static \Illuminate\Database\Eloquent\Builder|Shop withoutTrashed()
  * @mixin \Eloquent
  */
 class Shop extends Base
 {
     use SoftDeletes;
+
     /**
      * The table associated with the model.
      *
@@ -53,10 +55,18 @@ class Shop extends Base
      */
     protected $primaryKey = 'id';
 
-    protected $appends = [
-        'status_text'
-    ];
+    /**
+     * 是否自动维护时间戳
+     *
+     * @var bool
+     */
+    public $timestamps = true;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_id',
         'name',
@@ -78,27 +88,48 @@ class Shop extends Base
     ];
 
     /**
-     * 是否自动维护时间戳
+     * The attributes that should be mutated to dates.
      *
-     * @var bool
+     * @var array
      */
-    public $timestamps = true;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
 
-    public function getStatusTextAttribute()
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'status_text'
+    ];
+
+    /**
+     * 获取状态文本
+     *
+     * @return string
+     */
+    public function getStatusTextAttribute(): string
     {
-        return [
+        $map = [
             0 => '待审核',
             1 => '通过',
             2 => '拒绝',
-        ][$this->status]??'';
+        ];
+
+        return $map[$this->status] ?? '';
     }
 
-    function user()
+    /**
+     * 关联用户
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
-
-
 }

@@ -5,6 +5,8 @@ namespace app\admin\model;
 use plugin\admin\app\model\Base;
 
 /**
+ * Class Admin
+ *
  * @property integer $id ID(主键)
  * @property string $username 用户名
  * @property string $nickname 昵称
@@ -21,9 +23,9 @@ use plugin\admin\app\model\Base;
  * @property string $wx_sj_qr 微信收款码
  * @property string $bank_account 银行卡号
  * @property string $bank_name 银行名称
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
  * @mixin \Eloquent
  */
 class Admin extends Base
@@ -41,7 +43,7 @@ class Admin extends Base
      * @var string
      */
     protected $primaryKey = 'id';
-    
+
     /**
      * The attributes that are mass assignable.
      *
