@@ -118,6 +118,11 @@ class User extends Base
      */
     public $timestamps = true;
 
+    protected $appends = [
+        'user_identity_status',
+        'shop_status'
+    ];
+
     public static function changeMoney($money, $user_id, $memo)
     {
         Db::connection('plugin.admin.mysql')->beginTransaction();
