@@ -58,6 +58,7 @@
         <!-- 表格行工具栏 -->
         <script type="text/html" id="table-bar">
             <button class="pear-btn pear-btn-xs tool-btn" lay-event="children" permission="app.admin.user.select">下级</button>
+            <button class="pear-btn pear-btn-xs tool-btn" lay-event="changeMoney">变更余额</button>
             <button class="pear-btn pear-btn-xs tool-btn" lay-event="edit" permission="app.admin.user.update">编辑</button>
             <button class="pear-btn pear-btn-xs tool-btn" lay-event="remove" permission="app.admin.user.delete">删除</button>
         </script>
@@ -284,6 +285,8 @@
                         edit(obj);
                     } else if (obj.event === "children") {
                         children(obj);
+                    } else if (obj.event === "changeMoney") {
+                        changeMoney(obj);
                     }
                 });
 
@@ -361,6 +364,49 @@
                         content: '/app/admin/user/index' + "?" + 'parent_id' + "=" + value
                     });
                 }
+
+                let changeMoney = function (obj) {
+                    let id = obj.data[PRIMARY_KEY];
+
+                    layer.prompt({title: '请输入金额'}, function (value, index, elem) {
+                        value = value.trim();
+
+                        // 校验输入是否为空
+                        if (value === '') {
+                            elem.focus();
+                            return;
+                        }
+
+                        // 显示 loading
+                        let loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
+
+                        layui.$.ajax({
+                            url: UPDATE_URL,
+                            type: "POST",
+                            data: {
+                                id: id,
+                                money: value
+                            },
+                            success: function (res) {
+                                layer.close(loadingIndex); // 关闭 loading
+
+                                if (res.code && res.code !== 0) {
+                                    return layui.popup.failure(res.msg || "操作失败");
+                                }
+
+                                layui.popup.success("修改成功");
+                                refreshTable();
+                            },
+                            error: function () {
+                                layer.close(loadingIndex);
+                                layui.popup.failure("请求出错，请稍后再试");
+                            }
+                        });
+
+                        // 关闭输入框
+                        layer.close(index);
+                    });
+                };
 
                 // 删除一行
                 let remove = function(obj) {
