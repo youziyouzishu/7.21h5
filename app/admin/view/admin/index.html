@@ -167,30 +167,7 @@
 					},{
 						title: "登录时间",align: "center",
 						field: "login_at",
-					},{
-						title: "禁用",align: "center",
-						field: "status",
-						templet: function (d) {
-							let field = "status";
-							form.on("switch("+field+")", function (data) {
-								let load = layer.load();
-								let postData = {};
-								postData[field] = data.elem.checked ? 1 : 0;
-								postData[PRIMARY_KEY] = this.value;
-								$.post(UPDATE_API, postData, function (res) {
-									layer.close(load);
-									if (res.code) {
-				                        return layui.popup.failure(res.msg, function () {
-				                            data.elem.checked = !data.elem.checked;
-				                            form.render();
-				                        });
-				                    }
-									return layui.popup.success("操作成功");
-								})
-							});
-							let checked = d[field] === 1 ? "checked" : "";
-							return '<input type="checkbox" value="'+util.escape(d[PRIMARY_KEY])+'" lay-filter="'+util.escape(field)+'" lay-skin="switch" lay-text="'+util.escape('')+'" '+checked+'/>';
-						}
+                        hide: true,
 					},{
 						title: "支付宝商家收款码",align: "center",
 						field: "zfb_sj_qr",
@@ -216,6 +193,9 @@
 						title: "银行名称",align: "center",
 						field: "bank_name",
 					},{
+                        title: "总订单金额",align: "center",
+                        field: "total_amount",
+                    },{
                         title: "邀请码",align: "center",
                         field: "invite_code",
                     },{
@@ -235,6 +215,7 @@
 				    cols: [cols],
 				    skin: "line",
 				    size: "lg",
+                    cellMinWidth:120,
 				    toolbar: "#table-toolbar",
 				    autoSort: false,
 				    defaultToolbar: [{
