@@ -152,12 +152,24 @@
 							return d.user?d.user.nickname:"";
 						}
 					},{
+                        title: "买家手机号",align: "center",
+                        field: "user.mobile",
+                        templet: function (d) {
+                            return d.user?d.user.mobile:"";
+                        }
+                    },{
 						title: "卖家",align: "center",
 						field: "to_user_id",
                         templet: function (d) {
                             return d.to_user?d.to_user.nickname:"";
                         }
 					},{
+                        title: "卖家手机号",align: "center",
+                        field: "to_user.mobile",
+                        templet: function (d) {
+                            return d.to_user?d.to_user.mobile:"";
+                        }
+                    },{
 						title: "订单编号",align: "center",
 						field: "ordersn",
 					},{
@@ -187,14 +199,16 @@
                     },{
                         title: "用户支付凭证",align: "center",
                         field: "user_pay_image",
-                        templet: function (d) {
-                            return '<img src="'+encodeURI(d['user_pay_image'])+'" style="max-width:32px;max-height:32px;" alt="" />'
+                        templet: function(d) {
+                            if (!d.user_pay_image) return '';
+                            return '<img class="preview-img" src="'+encodeURI(d.user_pay_image)+'" style="max-width:32px;max-height:32px;cursor:pointer;" alt="用户支付凭证" />';
                         }
                     },{
                         title: "平台支付凭证",align: "center",
                         field: "platform_pay_image",
-                        templet: function (d) {
-                            return '<img src="'+encodeURI(d['platform_pay_image'])+'" style="max-width:32px;max-height:32px;" alt="" />'
+                        templet: function(d) {
+                            if (!d.user_pay_image) return '';
+                            return '<img class="preview-img" src="'+encodeURI(d.platform_pay_image)+'" style="max-width:32px;max-height:32px;cursor:pointer;" alt="平台支付凭证" />';
                         }
                     },{
 						title: "状态",align: "center",

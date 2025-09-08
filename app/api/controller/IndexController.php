@@ -10,6 +10,8 @@ class IndexController extends Base
     protected array $noNeedLogin = ["*"];
     public function index(Request $request)
     {
+
+
     }
 
 }
