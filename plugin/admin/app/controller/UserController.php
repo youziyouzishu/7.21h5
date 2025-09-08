@@ -40,7 +40,10 @@ class UserController extends Crud
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $query = $this->doSelect($where, $field, $order)->with(['admin']);
-
+        $keyword = $request->input('keyword');
+        if (!empty($keyword)) {
+            $query->orWhere('nickname', 'like', '%' . $keyword . '%')->orWhere('mobile', 'like', '%' . $keyword . '%');
+        }
         if (in_array(3, admin('roles'))) {
             $query->where('admin_id', admin_id());
         }
