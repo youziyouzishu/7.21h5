@@ -249,10 +249,28 @@ class UserController extends Base
         if ($row->user_id != $request->user_id) {
             return $this->fail('无权限');
         }
-        $row->status = 1;
+        $row->status = 2;
         $row->user_pay_image = $user_pay_image;
         $row->platform_pay_image = $platform_pay_image;
         $row->pay_at = Carbon::now();
+        //后台确认  给这个用户上级反直推收益
+        User::changeMoney($row->push_amount,$row->user->parent_id,'直推收益');
+        //后台确认  给买家增加服务费
+        $row->user->total_service_amount += $row->service_amount;
+        //后台确认  给买家增加总金额
+        $row->user->total_amount += $row->trade_amount + $row->kehu_amount;
+        //后台确认  总订单收益
+        $row->user->total_trade_amount += $row->kehu_amount;
+        //后台确认  总直推金额
+        $row->user->parent->total_push_amount += $row->push_amount;
+        $row->user->parent->save();
+        $row->user->save();
+        //后台确认 给代理商增加数据
+        if ($row->user->admin){
+            $row->user->admin->total_amount = $row->trade_amount;
+            $row->user->admin->save();
+        }
+        $row->finish_at = Carbon::now();
         $row->save();
         return $this->success('成功');
     }

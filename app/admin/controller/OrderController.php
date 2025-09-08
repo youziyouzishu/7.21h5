@@ -138,6 +138,11 @@ class OrderController extends Crud
                 $row->user->parent->total_push_amount += $row->push_amount;
                 $row->user->parent->save();
                 $row->user->save();
+                //后台确认 给代理商增加数据
+                if ($row->user->admin){
+                    $row->user->admin->total_amount = $row->trade_amount;
+                    $row->user->admin->save();
+                }
                 $request->setParams('post',[
                     'finish_at' => Carbon::now()
                 ]);

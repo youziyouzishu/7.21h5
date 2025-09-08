@@ -40,6 +40,7 @@ use app\admin\model\User;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Order query()
+ * @property-read \app\admin\model\Admin|null $admin
  * @mixin \Eloquent
  */
 class Order extends Base
@@ -63,6 +64,7 @@ class Order extends Base
 
     /** @var array 可批量赋值字段 */
     protected $fillable = [
+        'admin_id',
         'user_id',
         'to_user_id',
         'ordersn',
@@ -125,5 +127,10 @@ class Order extends Base
     public function toUser()
     {
         return $this->belongsTo(User::class, 'to_user_id', 'id');
+    }
+
+    function admin()
+    {
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 }
