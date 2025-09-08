@@ -39,7 +39,7 @@ class UserController extends Crud
     public function select(Request $request): Response
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
-        $query = $this->doSelect($where, $field, $order)->with(['admin']);
+        $query = $this->doSelect($where, $field, $order)->with(['admin','parent']);
         $keyword = $request->input('keyword');
         if (!empty($keyword)) {
             $query->orWhere('nickname', 'like', '%' . $keyword . '%')->orWhere('mobile', 'like', '%' . $keyword . '%');
