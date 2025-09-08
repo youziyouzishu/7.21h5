@@ -147,12 +147,23 @@
 					},{
 						title: "余额(元)",
 						field: "money",
-						hide: true,
 					},{
 						title: "积分",
 						field: "score",
 						hide: true,
 					},{
+                        title: "总服务费",
+                        field: "total_service_amount",
+                    },{
+                        title: "总订单收益",
+                        field: "total_trade_amount",
+                    },{
+                        title: "总提现金额",
+                        field: "total_withdraw_amount",
+                    },{
+                        title: "累计收益金额",
+                        field: "total_push_amount",
+                    },{
 						title: "登录时间",
 						field: "last_time",
 						hide: true,
@@ -213,7 +224,7 @@
 						toolbar: "#table-bar",
 						align: "center",
 						fixed: "right",
-                        width: 150,
+                        width: 220,
 					}
 				];
 				
@@ -224,6 +235,7 @@
 				        elem: "#data-table",
 				        url: SELECT_API,
 				        page: true,
+                        cellMinWidth:150,
 				        cols: [cols],
 				        skin: "line",
 				        size: "lg",

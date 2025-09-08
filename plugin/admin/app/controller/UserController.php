@@ -98,6 +98,7 @@ class UserController extends Crud
             $money = $request->input('money');
             if (isset($money)) {
                 \app\admin\model\User::changeMoney($money, $id, '会员余额变动');
+                return $this->json(0);
             }
             return parent::update($request);
         }
