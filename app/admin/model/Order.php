@@ -37,6 +37,9 @@ use app\admin\model\User;
  * @method static \Illuminate\Database\Eloquent\Builder|Order onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Order withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder|Order withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Order query()
  * @mixin \Eloquent
  */
 class Order extends Base

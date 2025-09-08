@@ -85,7 +85,7 @@ class Sms extends Base
      * @param string $event  事件
      * @return  boolean
      */
-    public static function send(string $mobile, int $code = null, string $event = 'default'): bool
+    public static function send(string $mobile, ?int $code = null, string $event = 'default'): bool
     {
         $code = is_null($code) ? Util::numeric() : $code;
         $ip = request()->getRealIp();

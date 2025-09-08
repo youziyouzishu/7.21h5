@@ -28,6 +28,23 @@ class AdminController extends Crud
     {
         $this->model = new Admin;
     }
+
+    /**
+     * 查询
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+     */
+    public function select(Request $request): Response
+    {
+        [$where, $format, $limit, $field, $order] = $this->selectInput($request);
+        $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
+        $query = $this->doSelect($where, $field, $order)->whereIn('id', $ids);
+        if (in_array(3, admin('roles'))) {
+            $query->where('id', admin_id());
+        }
+        return $this->doFormat($query, $format, $limit);
+    }
     
     /**
      * 浏览
@@ -47,6 +64,9 @@ class AdminController extends Crud
     public function insert(Request $request): Response
     {
         if ($request->method() === 'POST') {
+            $request->setParams('post',[
+                'invite_code' => Admin::generateInviteCode()
+            ]);
             $data = $this->insertInput($request);
             $id = $this->doInsert($data);
             $admin_role = new AdminRole;
@@ -56,23 +76,6 @@ class AdminController extends Crud
             return $this->json(0, 'ok', ['id' => $id]);
         }
         return view('admin/insert');
-    }
-
-    /**
-     * 查询
-     * @param Request $request
-     * @return Response
-     * @throws BusinessException
-     */
-    public function select(Request $request): Response
-    {
-        [$where, $format, $limit, $field, $order] = $this->selectInput($request);
-        $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
-        $query = $this->doSelect($where, $field, $order)->whereIn('id', $ids);
-        if (in_array(3, admin('roles'))) {
-            $query->where('id', admin_id());
-        }
-        return $this->doFormat($query, $format, $limit);
     }
 
     /**

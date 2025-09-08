@@ -34,6 +34,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder|UserIdentity withoutTrashed()
+ * @property int|null $admin_id 代理
  * @mixin \Eloquent
  */
 class UserIdentity extends Base

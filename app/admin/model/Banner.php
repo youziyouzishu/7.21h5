@@ -16,6 +16,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|Banner newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Banner newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Banner query()
+ * @property int $weight 权重
  * @mixin \Eloquent
  */
 class Banner extends Base
@@ -47,10 +48,4 @@ class Banner extends Base
         'updated_at',
     ];
 
-    /**
-     * 是否自动维护时间戳
-     *
-     * @var bool
-     */
-    public $timestamps = true;
 }

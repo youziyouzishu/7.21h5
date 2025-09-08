@@ -35,6 +35,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|Shop onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Shop withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder|Shop withoutTrashed()
+ * @property int|null $admin_id 代理商
  * @mixin \Eloquent
  */
 class Shop extends Base

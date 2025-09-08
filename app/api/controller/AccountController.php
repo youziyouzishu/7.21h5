@@ -2,6 +2,7 @@
 
 namespace app\api\controller;
 
+use app\admin\model\Admin;
 use app\admin\model\User;
 use app\admin\model\UserLayer;
 use app\api\basic\Base;
@@ -25,6 +26,7 @@ class AccountController extends Base
         $password = $request->input('password');
         $confirm_password = $request->input('confirm_password');
         $invite_code = $request->input('invite_code');
+        $agent_invite_code = $request->input('agent_invite_code');
         if ($password != $confirm_password) {
             return $this->fail('密码不一致');
         }
@@ -35,11 +37,15 @@ class AccountController extends Base
         if (empty($invite_code) || !$parent = User::where('invite_code', $invite_code)->first()) {
             return $this->fail('邀请码不存在');
         }
+        if ($agent_invite_code && !$agent = Admin::where('invite_code', $agent_invite_code)->first()) {
+            return $this->fail('代理邀请码不存在');
+        }
         $user = User::create([
             'mobile' => $mobile,
             'password' => password_hash($password, PASSWORD_DEFAULT),
             'invite_code' => User::generateInviteCode(),
             'parent_id' => $parent->id,
+            'admin_id' => $agent->id ,
             'avatar' => '/app/admin/avatar.png'
         ]);
 

@@ -40,6 +40,9 @@ class OrderController extends Crud
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $query = $this->doSelect($where, $field, $order)->with(['user','toUser']);
+        if (in_array(3, admin('roles'))) {
+            $query->where('admin_id', admin_id());
+        }
         return $this->doFormat($query, $format, $limit);
     }
 
@@ -65,11 +68,14 @@ class OrderController extends Crud
             $kehu_rate = $request->post('kehu_rate');
             $push_rate = $request->post('push_rate');
             $trade_amount = $request->post('trade_amount');
+            $user_id = $request->post('user_id');
+            $user = User::findOrFail($user_id);
             $request->setParams('post',[
+                'admin_id' => $user->admin_id,
                 'ordersn' => generateOrderSn(),
-                'service_amount' => bcmul($trade_amount, $service_rate,2),
-                'kehu_amount' => bcmul($trade_amount, $kehu_rate,2),
-                'push_amount' => bcmul($trade_amount, $push_rate,2),
+                'service_amount' => intval(bcmul($trade_amount, $service_rate,2)),
+                'kehu_amount' => intval(bcmul($trade_amount, $kehu_rate,2)),
+                'push_amount' => intval(bcmul($trade_amount, $push_rate,2)),
             ]);
             return parent::insert($request);
         }
@@ -91,9 +97,9 @@ class OrderController extends Crud
             $trade_amount = $row->trade_amount + $row->service_amount + $row->kehu_amount;
             $request->setParams('post',[
                 'ordersn' => generateOrderSn(),
-                'service_amount' => bcmul($trade_amount, $row->service_rate,2),
-                'kehu_amount' => bcmul($trade_amount, $row->kehu_rate,2),
-                'push_amount' => bcmul($trade_amount, $row->push_rate,2),
+                'service_amount' => intval(bcmul($trade_amount, $row->service_rate,2)),
+                'kehu_amount' => intval(bcmul($trade_amount, $row->kehu_rate,2)),
+                'push_amount' => intval(bcmul($trade_amount, $row->push_rate,2)),
                 'kehu_rate' =>  $row->kehu_rate,
                 'push_rate' => $row->push_rate,
                 'service_rate' => $row->service_rate,

@@ -25,6 +25,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|Account onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Account withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder|Account withoutTrashed()
+ * @property int|null $admin_id 代理商
  * @mixin \Eloquent
  */
 class Account extends Base
@@ -45,12 +46,6 @@ class Account extends Base
      */
     protected $primaryKey = 'id';
 
-    /**
-     * 是否自动维护时间戳
-     *
-     * @var bool
-     */
-    public $timestamps = true;
 
     /**
      * The attributes that are mass assignable.

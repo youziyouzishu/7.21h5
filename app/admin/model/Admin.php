@@ -26,6 +26,10 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|Admin newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Admin newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Admin query()
+ * @property string|null $invite_code 邀请码
+ * @property string $total_trade_amount 总订单收益
+ * @property string $total_withdraw_amount 总提现金额
+ * @property string $total_push_amount 累计直推金额
  * @mixin \Eloquent
  */
 class Admin extends Base
@@ -68,9 +72,15 @@ class Admin extends Base
     ];
 
     /**
-     * 是否自动维护时间戳
-     *
-     * @var bool
+     * 生成邀请码
+     * @return string
      */
-    public $timestamps = true;
+    public static function generateInviteCode()
+    {
+        do {
+            $invite_code = mt_rand(10000, 99999);
+        } while (self::where(['invite_code' => $invite_code])->exists());
+        return strval($invite_code);
+    }
+
 }

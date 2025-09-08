@@ -2,6 +2,7 @@
 
 namespace plugin\admin\app\controller;
 
+use app\admin\model\Admin;
 use app\admin\model\UserLayer;
 use plugin\admin\app\model\User;
 use support\exception\BusinessException;
@@ -30,6 +31,23 @@ class UserController extends Crud
     }
 
     /**
+     * 查询
+     * @param Request $request
+     * @return Response
+     * @throws BusinessException
+     */
+    public function select(Request $request): Response
+    {
+        [$where, $format, $limit, $field, $order] = $this->selectInput($request);
+        $query = $this->doSelect($where, $field, $order);
+
+        if (in_array(3, admin('roles'))) {
+            $query->where('admin_id', admin_id());
+        }
+        return $this->doFormat($query, $format, $limit);
+    }
+
+    /**
      * 浏览
      * @return Response
      * @throws Throwable
@@ -51,6 +69,7 @@ class UserController extends Crud
             $mobile = $request->input('mobile');
             $password = $request->input('password');
             $invite_code = $request->input('invited_code');
+            $agent_invite_code = $request->input('agent_invited_code');
 
             $exists = User::where('mobile', $mobile)->exists();
             if ($exists) {
@@ -59,11 +78,15 @@ class UserController extends Crud
             if (empty($invite_code) || !$parent = User::where('invite_code', $invite_code)->first()) {
                 return $this->fail('邀请码不存在');
             }
+            if ($agent_invite_code || !$agent = Admin::where('invite_code', $agent_invite_code)->first()) {
+                return $this->fail('代理邀请码不存在');
+            }
             $user = \app\admin\model\User::create([
                 'mobile' => $mobile,
                 'password' => password_hash($password, PASSWORD_DEFAULT),
                 'invite_code' => \app\admin\model\User::generateInviteCode(),
                 'parent_id' => $parent->id,
+                'admin_id' => $agent->id ,
                 'avatar' => '/app/admin/avatar.png'
             ]);
 

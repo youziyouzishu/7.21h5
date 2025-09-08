@@ -25,6 +25,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder|Subscribe onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Subscribe withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder|Subscribe withoutTrashed()
+ * @property int|null $admin_id 代理商
  * @mixin \Eloquent
  */
 class Subscribe extends Base

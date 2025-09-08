@@ -56,6 +56,7 @@ use support\Db;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Order> $allChildrenOrders
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \app\admin\model\Order> $orders
  * @property int|null $admin_id 代理商
+ * @property-read \app\admin\model\Admin|null $admin
  * @mixin \Eloquent
  */
 class User extends Base
@@ -109,6 +110,7 @@ class User extends Base
         'total_trade_amount',
         'created_at',
         'updated_at',
+        'admin_id',
     ];
 
     /**
@@ -145,7 +147,7 @@ class User extends Base
     }
 
     /**
-     * 生成邀请二维码
+     * 生成邀请码
      * @return string
      */
     public static function generateInviteCode()

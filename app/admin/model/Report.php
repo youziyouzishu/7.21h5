@@ -17,6 +17,7 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Report newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Report query()
  * @property \Illuminate\Support\Carbon $date 日期
+ * @property int|null $admin_id 代理商
  * @mixin \Eloquent
  */
 class Report extends Base

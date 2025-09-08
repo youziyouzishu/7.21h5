@@ -26,6 +26,12 @@ use plugin\admin\app\model\Base;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|UserAddress withoutTrashed()
  * @property-read \app\admin\model\User|null $user
+ * @property int $default 默认:0=否,1=是
+ * @property string $region 区
+ * @property string $name 姓名
+ * @property string|null $lat 纬度
+ * @property string|null $lng 经度
+ * @property int|null $admin_Id 代理
  * @mixin \Eloquent
  */
 class UserAddress extends Base
