@@ -11,48 +11,7 @@ use support\Request;
 
 class CommonController extends Base
 {
-    protected array $noNeedLogin = ['*'];
-
-    #获取省
-    function getProvince(Request $request)
-    {
-        $row = Area::where('level', 1)->get();
-        return $this->success('请求成功', $row);
-    }
-
-    #获取城市
-    function getCity(Request $request)
-    {
-        $pid = $request->post('pid');
-        $row = Area::where('level', 2)->where('pid', $pid)->get();
-        return $this->success('请求成功', $row);
-    }
-
-    #获取区
-    function getDistrict(Request $request)
-    {
-        $pid = $request->post('pid');
-        $row = Area::where('level', 3)->where('pid', $pid)->get();
-        return $this->success('请求成功', $row);
-    }
-
-    #根据经纬度获取市
-    function getCityFromLngLat(Request $request)
-    {
-        $lng = $request->post('lng');
-        $lat = $request->post('lat');
-        $row = Area::getCityFromLngLat($lng, $lat);
-        return $this->success('请求成功', $row);
-    }
-
-    #根据经纬度获取区
-    function getDistrictFromLngLat(Request $request)
-    {
-        $lng = $request->post('lng');
-        $lat = $request->post('lat');
-        $row = Area::getDistrictFromLngLat($lng, $lat);
-        return $this->success('请求成功', $row);
-    }
+    protected array $noNeedLogin = ['getBannerList'];
 
     /**
      * 获取轮播图
@@ -66,17 +25,6 @@ class CommonController extends Base
     }
 
     /**
-     * 公告栏
-     * @param Request $request
-     * @return \support\Response
-     */
-    function getNoticeList(Request $request)
-    {
-        $row = Notice::orderByDesc('id')->first();
-        return $this->success('请求成功', $row);
-    }
-
-    /**
      * 获取配置项
      * @param Request $request
      * @return \support\Response
@@ -84,7 +32,17 @@ class CommonController extends Base
     function getConfig(Request $request)
     {
         $config = Option::where('name', 'system_config')->value('value');
-        return $this->success('成功',json_decode($config));
+        $result = json_decode($config);
+        $user = $request->user();
+        if ($user->admin_id){
+            $admin = $user->admin;
+            $result->platform->zfb_sj_qr = $admin->zfb_sj_qr;
+            $result->platform->zfb_yc_qr = $admin->zfb_yc_qr;
+            $result->platform->wx_sj_qr = $admin->wx_sj_qr;
+            $result->platform->bank_account = $admin->bank_account;
+            $result->platform->bank_name = $admin->bank_name;
+        }
+        return $this->success('成功',$result);
     }
 
 

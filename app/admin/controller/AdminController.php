@@ -40,6 +40,11 @@ class AdminController extends Crud
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
         $query = $this->doSelect($where, $field, $order)->whereIn('id', $ids);
+        $agent = $request->input('agent');
+        if ($agent === true) {
+            $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
+            $query->whereIn('id', $ids);
+        }
         if (in_array(3, admin('roles'))) {
             $query->where('id', admin_id());
         }

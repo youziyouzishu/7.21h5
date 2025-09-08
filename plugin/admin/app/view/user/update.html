@@ -13,12 +13,12 @@
             <div class="mainBox">
                 <div class="main-container mr-5">
 
-<!--                    <div class="layui-form-item">-->
-<!--                        <label class="layui-form-label">代理商</label>-->
-<!--                        <div class="layui-input-block">-->
-<!--                            <div name="admin_id" id="admin_id" value="" ></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">代理商</label>
+                        <div class="layui-input-block">
+                            <div name="admin_id" id="admin_id" value="" ></div>
+                        </div>
+                    </div>
 
                     <div class="layui-form-item">
                         <label class="layui-form-label">昵称</label>
@@ -121,6 +121,7 @@
                                         dataType: "json",
                                         data: {
                                             mobile: val,
+                                            agent:true,
                                             page: pageIndex,
                                         },
                                         success: function (res) {

@@ -39,7 +39,7 @@ class UserController extends Crud
     public function select(Request $request): Response
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
-        $query = $this->doSelect($where, $field, $order);
+        $query = $this->doSelect($where, $field, $order)->with(['admin']);
 
         if (in_array(3, admin('roles'))) {
             $query->where('admin_id', admin_id());

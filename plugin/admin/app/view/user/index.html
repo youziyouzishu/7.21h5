@@ -105,6 +105,12 @@
 						title: "昵称",
 						field: "nickname",
 					},{
+                        title: "代理商",
+                        field: "agent.name",
+                        templet: function (d) {
+                            return d.admin?d.admin.nickname:''
+                        }
+                    },{
 						title: "密码",
 						field: "password",
 						hide: true,
