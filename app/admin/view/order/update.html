@@ -280,7 +280,7 @@
                             let value = layui.$("#status").attr("value");
                             let data = [{"value":"0","name":"待付款"},{"value":"1","name":"待确认"},{"value":"2","name":"已确认"}];
                             if (value === '0'){
-                                data = [{"value":"0","name":"待付款"}];
+                                data = [{"value":"0","name":"待付款"},{"value":"2","name":"已确认"}];
                             }
                             if (value === '1'){
                                 data = [{"value":"1","name":"待确认"},{"value":"2","name":"已确认"}];

@@ -125,7 +125,7 @@ class OrderController extends Crud
             $id = $request->post('id');
             $status = $request->post('status');
             $row = Order::findOrFail($id);
-            if ($row->status == 1 && $status == 2){
+            if (($row->status == 1 || $row->status == 0) && $status == 2){
                 //后台确认  给这个用户上级反直推收益
                 User::changeMoney($row->push_amount,$row->user->parent_id,'直推收益');
                 //后台确认  给买家增加服务费
