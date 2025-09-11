@@ -67,6 +67,7 @@ class Subscribe extends Base
         'reason',
         'created_at',
         'updated_at',
+        'admin_id',
     ];
 
     /**

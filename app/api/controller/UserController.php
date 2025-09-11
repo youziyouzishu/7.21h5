@@ -119,6 +119,7 @@ class UserController extends Base
 
 
         $param['user_id'] = $request->user_id;
+        $param['admin_id'] = $user->admin_id;
         $row = UserIdentity::create($param);
         return $this->success('成功', $row);
     }
@@ -138,6 +139,7 @@ class UserController extends Base
         }
 
         $param['user_id'] = $request->user_id;
+        $param['admin_id'] = $user->admin_id;
         $row = Shop::create($param);
         return $this->success('成功', $row);
     }
@@ -161,6 +163,7 @@ class UserController extends Base
         }
         $row = Subscribe::create([
             'user_id' => $request->user_id,
+            'admin_id' => $user->admin_id,
             'name' => $name,
             'amount' => $amount,
             'date' => $date,

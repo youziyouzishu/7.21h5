@@ -92,6 +92,8 @@ class OrderController extends Crud
     {
         if ($request->method() === 'POST') {
             $id = $request->input('id');
+            $user_id = $request->input('user_id');
+            $user = User::findOrFail($user_id);
             $row = Order::findOrFail($id);
 
             $trade_amount = $row->trade_amount + $row->service_amount + $row->kehu_amount;
@@ -104,7 +106,8 @@ class OrderController extends Crud
                 'push_rate' => $row->push_rate,
                 'service_rate' => $row->service_rate,
                 'goods_name' => $row->goods_name,
-                'trade_amount' => $trade_amount
+                'trade_amount' => $trade_amount,
+                'admin_id' => $user->admin_id,
             ]);
             $row->is_copy = 1;
             $row->save();
@@ -124,6 +127,8 @@ class OrderController extends Crud
         if ($request->method() === 'POST') {
             $id = $request->post('id');
             $status = $request->post('status');
+            $user_id = $request->post('user_id');
+            $user = User::findOrFail($user_id);
             $row = Order::findOrFail($id);
             if (($row->status == 1 || $row->status == 0) && $status == 2){
                 //后台确认  给这个用户上级反直推收益
@@ -147,6 +152,9 @@ class OrderController extends Crud
                     'finish_at' => Carbon::now()
                 ]);
             }
+            $request->setParams('post',[
+                'admin_id' => $user->admin_id,
+            ]);
             return parent::update($request);
         }
         return view('order/update');

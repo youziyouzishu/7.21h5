@@ -39,6 +39,9 @@ class UserIdentityController extends Crud
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $query = $this->doSelect($where, $field, $order)->with(['user']);
+        if (in_array(3, admin('roles'))) {
+            $query->where('admin_id', admin_id());
+        }
         return $this->doFormat($query, $format, $limit);
     }
     
