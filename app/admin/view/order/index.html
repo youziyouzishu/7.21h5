@@ -36,6 +36,13 @@
                             <input type="text" name="mobile" value="" class="layui-input">
                         </div>
                     </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">代理商</label>
+                        <div class="layui-input-block">
+                            <div name="admin_id" id="admin_id" value="" ></div>
+                        </div>
+                    </div>
                     
                     <div class="layui-form-item">
                         <label class="layui-form-label">状态</label>
@@ -122,6 +129,47 @@
                     initValue: initValue,
                     data: [{"value":"0","name":"待付款"},{"value":"1","name":"待确认"},{"value":"2","name":"已确认"}],
                     toolbar: {"show":true,"list":["ALL","CLEAR","REVERSE"]},
+                })
+            });
+
+            layui.use(["jquery", "xmSelect", "popup"], function() {
+                let value = layui.$("#admin_id").attr("value");
+                let initValue = value ? value.split(",") : [];
+                window.selectUser = layui.xmSelect.render({
+                    el: '#admin_id',
+                    name: "admin_id",
+                    //配置搜索
+                    filterable: true,
+                    //配置远程分页
+                    clickClose: true,
+                    paging: true,
+                    pageRemote: true,
+                    radio: true,
+                    remoteSearch:true,
+                    data: [],
+                    initValue: initValue,
+                    template({ item, sels, name, value }){
+                        return name + '<span style="position: absolute; right: 10px; color: #8799a3">'+value+'</span>'
+                    },
+                    prop: {
+                        name: 'nickname',
+                        value: 'id',
+                    },
+                    //数据处理
+                    remoteMethod: function(val, cb, show, pageIndex){
+                        layui.$.ajax({
+                            url: "/admin/admin/select",
+                            dataType: "json",
+                            data: {
+                                keyword: val,
+                                page: pageIndex,
+                            },
+                            success: function (res) {
+                                //回调需要两个参数, 第一个: 数据数组, 第二个: 总页码
+                                cb(res.data,Math.ceil(res.count / 10))
+                            }
+                        });
+                    }
                 })
             });
             

@@ -41,6 +41,10 @@ class AdminController extends Crud
         $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
         $query = $this->doSelect($where, $field, $order)->whereIn('id', $ids);
         $agent = $request->input('agent');
+        $keyword = $request->input('keyword');
+        if (!empty($keyword)) {
+            $query->orWhere('nickname', 'like', '%' . $keyword . '%')->orWhere('mobile', 'like', '%' . $keyword . '%');
+        }
         if ($agent === true) {
             $ids = AdminRole::where('role_id', 3)->pluck('admin_id');
             $query->whereIn('id', $ids);
