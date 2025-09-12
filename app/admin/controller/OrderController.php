@@ -40,6 +40,12 @@ class OrderController extends Crud
     {
         [$where, $format, $limit, $field, $order] = $this->selectInput($request);
         $query = $this->doSelect($where, $field, $order)->with(['user','toUser']);
+        $mobile = $request->input('mobile');
+        if ($mobile) {
+            $query->whereHas('user', function ($query) use ($mobile) {
+                $query->where('mobile', $mobile);
+            });
+        }
         if (in_array(3, admin('roles'))) {
             $query->where('admin_id', admin_id());
         }

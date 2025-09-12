@@ -132,6 +132,7 @@ class WithdrawController extends Base
         $into_amount = bcsub($amount, $fee_amount,2);
         User::changeMoney(-$amount, $user->id, '提现');
         Withdraw::create([
+            'admin_id' => $user->admin_id,
             'user_id' => $user->id,
             'account_id' => $id,
             'amount' => $amount,
